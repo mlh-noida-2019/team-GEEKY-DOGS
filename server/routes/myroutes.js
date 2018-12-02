@@ -11,6 +11,8 @@ var {User}=require('./../User-Data/user.js');
 var {Event}=require('./../User-Data/event.js');
 var {authenticate}=require('./../middleware/authenticate.js');
 
+router.get('/', (req, res) => res.send('running'));
+
 
 router.post('/usersignup',(req,res)=>{
   console.log(req.body);
@@ -28,7 +30,6 @@ router.post('/usersignup',(req,res)=>{
 router.post('/userlogin',(req,res)=>{
   var body=_.pick(req.body,['email','password']);
   User.findByCredentials(body.email,body.password).then((user)=>{
-    console.log(user);
     return user.generateAuthToken().then((token)=>{
       res.header('x-auth',token).send(user);
     });
@@ -51,6 +52,16 @@ router.post('/add',authenticate,(req,res)=>{
     res.status(400).send(e);
   });
 });
+
+router.post('verify',authenticate,(req,res)=>{
+  var eventname=req.body.eventname;
+  var email=req.body.email;
+  var id=req.body.eventId;
+  User.findById(id).then((event)=>{
+  //if email exist user verified else not// cannot write code time ended
+    });
+  });
+  
 
 
 
